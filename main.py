@@ -28,8 +28,12 @@ if __name__ == "__main__":
     test_model(model, data_dir, batch_size, test_split)
 
     # 询问用户是否保存模型
-    save_model = input("Save model? (y/n): ")
-    if save_model == "y":
-        date_time = datetime.now().strftime("%Y%m%d%H%M%S")
-        model_path = f"{model_name}_{date_time}.pth"
-        model.save_model(model_path)
+    # save_model = input("Save model? (y/n): ")
+    # if save_model == "y":
+    #     date_time = datetime.now().strftime("%Y%m%d%H%M%S")
+    #     model_path = f"{model_name}_{date_time}.pth"
+    #     model.save_model(model_path)
+
+    date_time = datetime.now().strftime("%Y%m%d%H%M%S")
+    model_path = f"{model_name}_{date_time}.pth"
+    model.save_model(model_path)
