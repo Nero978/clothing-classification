@@ -68,6 +68,8 @@ python main.py
 
 如果有可用的 CUDA 设备，项目将自动使用 CUDA 加速。
 
+如果 CUDA 不可用，可能是安装了 CPU 版本的 Pytorch。请考虑按照 [指南](https://pytorch.org/get-started/locally/) 重新安装可用于 CUDA 加速的 PyTorch。
+
 ### MPS
 
 如果有多个 GPU，将自动使用 MPS（Multi-Process Service）来提高性能。
