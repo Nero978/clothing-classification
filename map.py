@@ -1,6 +1,6 @@
 label_map = {
     0: "T-Shirt",
-    1: "Long Sleeve",
+    1: "Longsleeve",
     2: "Pants",
     3: "Shoes",
     4: "Shirt",
@@ -17,7 +17,7 @@ label_map = {
     15: "Top",
     16: "Blouse",
     17: "Not sure",
-    18: "Others",
+    18: "Other",
     19: "Skip",
 }
 
