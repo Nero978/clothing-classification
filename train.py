@@ -6,14 +6,8 @@ from torch.optim import lr_scheduler
 from model import SimpleCNN
 from dataset import load_data
 import time
+from device import device
 
-device = (
-    "cuda"
-    if torch.cuda.is_available()
-    else "mps"
-    if torch.backends.mps.is_available()
-    else "cpu"
-)
 
 def train_model(
     data_dir,
@@ -52,8 +46,7 @@ def train_model(
         # 遍历训练数据
         batch_start_time = time.time()  # 记录批次开始时间
         for i, (inputs, labels) in enumerate(train_loader):
-            inputs = inputs.to(device)  # 切换设备
-            labels = labels.to(device)  # 切换设备
+            inputs, labels = inputs.to(device), labels.to(device)  # 将数据移动到设备
             optimizer.zero_grad()  # 清空梯度
             outputs = model(inputs)  # 前向传播
             loss = criterion(outputs, labels)  # 计算损失
@@ -63,13 +56,17 @@ def train_model(
 
             if i % 10 == 9:  # 每10个批次输出一次进度
                 batch_time = time.time() - batch_start_time  # 计算批次耗时
-                print(f"Batch {i + 1}/{len(train_loader)}, Loss: {loss.item():.4f}, Time: {batch_time:.2f}s")
+                print(
+                    f"Batch {i + 1}/{len(train_loader)}, Loss: {loss.item():.4f}, Time: {batch_time:.2f}s"
+                )
                 batch_start_time = time.time()  # 重置批次开始时间
 
         scheduler.step()  # 更新学习率
         epoch_loss = running_loss / len(train_loader.dataset)  # 计算平均损失
         epoch_time = time.time() - start_time  # 计算耗时
-        print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {epoch_loss:.4f}, Time: {epoch_time:.2f}s")  # 打印损失和耗时
+        print(
+            f"Epoch {epoch + 1}/{num_epochs}, Loss: {epoch_loss:.4f}, Time: {epoch_time:.2f}s"
+        )  # 打印损失和耗时
 
     print("Training complete")  # 添加输出
     return model  # 返回训练好的模型
