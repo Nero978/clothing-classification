@@ -12,7 +12,7 @@ if __name__ == "__main__":
     # 类别数量
     num_classes = 20
     # 训练轮数
-    num_epochs = 50
+    num_epochs = 35
     # 批量大小
     batch_size = 32
     # 学习率
@@ -32,3 +32,4 @@ if __name__ == "__main__":
     date_time = datetime.now().strftime("%Y%m%d%H%M%S")
     model_path = f"{model_name}_{date_time}.pth"
     model.save_model(model_path)
+    print(f"Model saved at {model_path}")
