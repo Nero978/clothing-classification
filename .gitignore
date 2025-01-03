@@ -1,4 +1,5 @@
 /.venv
 /clothing-dataset-full
+!/clothing-dataset-full/images.csv
 **/__pycache__
 **/.DS_Store
