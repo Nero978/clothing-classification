@@ -1,5 +1,6 @@
 import torch
 from dataset import load_data
+from device import device
 
 
 def test_model(model, data_dir, batch_size=32, test_split=0.2):
@@ -9,12 +10,16 @@ def test_model(model, data_dir, batch_size=32, test_split=0.2):
     # 设置模型为评估模式
     model.eval()
 
+    # 将模型移动到设备
+    model.to(device)
+
     correct = 0
     total = 0
 
     # 禁用梯度计算
     with torch.no_grad():
         for i, (inputs, labels) in enumerate(test_loader):
+            inputs, labels = inputs.to(device), labels.to(device)  # 将数据移动到设备
             outputs = model(inputs)  # 前向传播
             _, predicted = torch.max(outputs.data, 1)  # 获取预测结果
             total += labels.size(0)
