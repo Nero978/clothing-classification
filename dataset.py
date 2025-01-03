@@ -7,6 +7,10 @@ from torch.utils.data import Dataset, DataLoader, random_split
 from torchvision import transforms
 from map import get_label_id
 
+# 进程数量(略小于处理器核心数)
+num_workers = 4
+# 预取因子
+prefech_factor = 2
 
 class ClothingDataset(Dataset):
     def __init__(self, csv_file, root_dir, transform=None):
@@ -31,7 +35,7 @@ class ClothingDataset(Dataset):
         # 获取图像对应的标签
         label = get_label_id(self.annotations.iloc[idx, 2])
 
-        #print(f"Image: {img_name}, Label: {label}")
+        # print(f"Image: {img_name}, Label: {label}")
 
         transform = transforms.Compose(
             [
@@ -63,8 +67,8 @@ def load_data(data_dir, batch_size=32, test_split=0.2):
     train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
 
     # 创建数据加载器
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers, prefetch_factor=prefech_factor)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers, prefetch_factor=prefech_factor)
 
     # 返回训练集和测试集的数据加载器
     return train_loader, test_loader
