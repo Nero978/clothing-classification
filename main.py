@@ -12,7 +12,7 @@ if __name__ == "__main__":
     # 类别数量
     num_classes = 20
     # 训练轮数
-    num_epochs = 25
+    num_epochs = 50
     # 批量大小
     batch_size = 32
     # 学习率
