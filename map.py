@@ -21,11 +21,13 @@ label_map = {
     19: "Skip",
 }
 
+
 def get_label_id(label):
     for key, value in label_map.items():
         if value == label:
             return key
     return None
+
 
 def get_label_name(label_id):
     return label_map[label_id]
