@@ -17,7 +17,7 @@ if __name__ == "__main__":
     batch_size = 32
     # 学习率
     learning_rate = 0.001
-    # 模型保存路径
+    # 模型保存名称
     model_name = "model"
     # 断点路径
     checkpoint_path = "checkpoint.pth.tar"
