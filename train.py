@@ -49,7 +49,8 @@ def train_model(
 
         # 遍历训练数据
         for i, (inputs, labels) in enumerate(train_loader):
-            inputs = inputs.to(device)
+            inputs = inputs.to(device)  # 切换设备
+            labels = labels.to(device)  # 切换设备
             optimizer.zero_grad()  # 清空梯度
             outputs = model(inputs)  # 前向传播
             loss = criterion(outputs, labels)  # 计算损失
