@@ -19,8 +19,8 @@ clothing-classification/
 
 ## 环境依赖
 
-- Python 3.7+
-- PyTorch 1.7+
+- Python 3.11+
+- PyTorch 2.5.1+
 - torchvision
 - pandas
 - Pillow
