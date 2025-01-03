@@ -79,7 +79,7 @@ python main.py
 前往 `dataset.py` 文件，修改 `num_workers`、`prefech_factor` 变量来优化数据集加载性能。具体见代码注释。
 
 ## 直接测试模型
-下载模型文件[model](）
+下载模型文件：[model](https://yunpan.bjfu.edu.cn:443/link/5683DD9228958534378953E0D2645F89）
 
 前往 `test.py` 文件，修改 `model_path` 变量为模型文件路径，然后运行以下命令：
 
