@@ -12,6 +12,7 @@ num_workers = 4
 # 预取因子
 prefech_factor = 2
 
+
 class ClothingDataset(Dataset):
     def __init__(self, csv_file, root_dir, transform=None):
         # 读取CSV文件，包含图像文件名和标签
@@ -67,8 +68,20 @@ def load_data(data_dir, batch_size=32, test_split=0.2):
     train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
 
     # 创建数据加载器
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers, prefetch_factor=prefech_factor)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers, prefetch_factor=prefech_factor)
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=num_workers,
+        prefetch_factor=prefech_factor,
+    )
+    test_loader = DataLoader(
+        test_dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+        prefetch_factor=prefech_factor,
+    )
 
     # 返回训练集和测试集的数据加载器
     return train_loader, test_loader
