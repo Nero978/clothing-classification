@@ -31,6 +31,8 @@ class ClothingDataset(Dataset):
         # 获取图像对应的标签
         label = get_label_id(self.annotations.iloc[idx, 2])
 
+        #print(f"Image: {img_name}, Label: {label}")
+
         transform = transforms.Compose(
             [
                 transforms.Pad(
@@ -50,7 +52,7 @@ class ClothingDataset(Dataset):
 def load_data(data_dir, batch_size=32, test_split=0.2):
     # 定义CSV文件和图像文件所在的目录
     csv_file = os.path.join(data_dir, "images.csv")
-    root_dir = os.path.join(data_dir, "images_compressed")
+    root_dir = os.path.join(data_dir, "images_original")
 
     # 创建数据集对象
     dataset = ClothingDataset(csv_file=csv_file, root_dir=root_dir)

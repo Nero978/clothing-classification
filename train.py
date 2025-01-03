@@ -6,6 +6,13 @@ from torch.optim import lr_scheduler
 from model import SimpleCNN
 from dataset import load_data
 
+device = (
+    "cuda"
+    if torch.cuda.is_available()
+    else "mps"
+    if torch.backends.mps.is_available()
+    else "cpu"
+)
 
 def train_model(
     data_dir,
@@ -24,6 +31,10 @@ def train_model(
     # 定义损失函数
     criterion = torch.nn.CrossEntropyLoss()
 
+    # 选择设备
+    model.to(device)
+    criterion.to(device)
+
     # 定义优化器
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
@@ -38,6 +49,7 @@ def train_model(
 
         # 遍历训练数据
         for i, (inputs, labels) in enumerate(train_loader):
+            inputs = inputs.to(device)
             optimizer.zero_grad()  # 清空梯度
             outputs = model(inputs)  # 前向传播
             loss = criterion(outputs, labels)  # 计算损失
