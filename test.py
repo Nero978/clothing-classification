@@ -1,6 +1,7 @@
 import torch
 from dataset import load_data
 from device import device
+from model import SimpleCNN 
 
 
 def test_model(model, data_dir, batch_size=32, test_split=0.2):
@@ -34,16 +35,23 @@ def test_model(model, data_dir, batch_size=32, test_split=0.2):
     accuracy = correct / total
     print(f"Final Accuracy: {accuracy:.4f}")
 
+
 # 测试模型
 if __name__ == "__main__":
     # 模型路径
-    model_path = "model_xxxx.pth"
+    model_path = "model_20250104071806.pth"
     # 数据集路径
     data_dir = "./clothing-dataset-full"
     # 测试集比例
     test_split = 0.2
     # 批量大小
     batch_size = 32
+    # 类别数量
+    num_classes = 20
 
-    model = torch.load(model_path, map_location=device)
+    model = SimpleCNN(num_classes)
+    model.load_state_dict(
+        torch.load(model_path, map_location=device, weights_only=True)
+    )
+    model.to(device)
     test_model(model, data_dir, batch_size, test_split)
