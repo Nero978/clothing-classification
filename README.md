@@ -61,3 +61,17 @@ python main.py
 ## 断点续训
 
 如果训练过程中断，可以通过加载 checkpoint 文件继续训练。checkpoint 文件默认保存路径为 `checkpoint.pth.tar`。
+
+## 性能优化
+
+### CUDA 加速
+
+如果有可用的 CUDA 设备，项目将自动使用 CUDA 加速。
+
+### MPS
+
+如果有多个 GPU，将自动使用 MPS（Multi-Process Service）来提高性能。
+
+### 数据集预处理
+
+前往 `dataset.py` 文件，修改 `num_workers`、`prefech_factor` 变量来优化数据集加载性能。具体见代码注释。
