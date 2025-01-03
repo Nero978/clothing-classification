@@ -7,6 +7,21 @@ from model import SimpleCNN
 from dataset import load_data
 import time
 from device import device
+import os
+
+
+def save_checkpoint(state, filename="checkpoint.pth.tar"):
+    torch.save(state, filename)
+
+
+def load_checkpoint(filename):
+    if os.path.isfile(filename):
+        print(f"Loading checkpoint '{filename}'")
+        checkpoint = torch.load(filename, weights_only=True)
+        return checkpoint
+    else:
+        print(f"No checkpoint found at '{filename}'")
+        return None
 
 
 def train_model(
@@ -16,6 +31,7 @@ def train_model(
     batch_size=32,
     learning_rate=0.001,
     test_split=0.2,
+    checkpoint_path="checkpoint.pth.tar",
 ):
     # 加载训练和测试数据
     train_loader, test_loader = load_data(data_dir, batch_size, test_split)
@@ -36,8 +52,17 @@ def train_model(
     # 定义学习率调度器
     scheduler = lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
 
+    # 尝试加载checkpoint
+    start_epoch = 0
+    checkpoint = load_checkpoint(checkpoint_path)
+    if checkpoint:
+        model.load_state_dict(checkpoint["model_state_dict"])
+        optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+        scheduler.load_state_dict(checkpoint["scheduler_state_dict"])
+        start_epoch = checkpoint["epoch"] + 1
+
     # 训练模型
-    for epoch in range(num_epochs):
+    for epoch in range(start_epoch, num_epochs):
         print(f"Starting epoch {epoch + 1}/{num_epochs}")  # 添加输出
         start_time = time.time()  # 记录开始时间
         model.train()  # 设置模型为训练模式
@@ -67,6 +92,17 @@ def train_model(
         print(
             f"Epoch {epoch + 1}/{num_epochs}, Loss: {epoch_loss:.4f}, Time: {epoch_time:.2f}s"
         )  # 打印损失和耗时
+
+        # 保存checkpoint
+        save_checkpoint(
+            {
+                "epoch": epoch,
+                "model_state_dict": model.state_dict(),
+                "optimizer_state_dict": optimizer.state_dict(),
+                "scheduler_state_dict": scheduler.state_dict(),
+            },
+            checkpoint_path,
+        )
 
     print("Training complete")  # 添加输出
     return model  # 返回训练好的模型

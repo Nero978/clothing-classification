@@ -19,10 +19,12 @@ if __name__ == "__main__":
     learning_rate = 0.001
     # 模型保存路径
     model_name = "model"
+    # 断点路径
+    checkpoint_path = "checkpoint.pth.tar"
 
     # 训练模型
     model = train_model(
-        data_dir, num_classes, num_epochs, batch_size, learning_rate, test_split
+        data_dir, num_classes, num_epochs, batch_size, learning_rate, test_split, checkpoint_path
     )
     # 测试模型
     test_model(model, data_dir, batch_size, test_split)
