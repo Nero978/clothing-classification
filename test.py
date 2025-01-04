@@ -39,7 +39,7 @@ def test_model(model, data_dir, batch_size=32, test_split=0.2):
 # 测试模型
 if __name__ == "__main__":
     # 模型路径
-    model_path = "model_20250104071806.pth"
+    model_path = "model_20250104082744.pth"
     # 数据集路径
     data_dir = "./clothing-dataset-full"
     # 测试集比例
